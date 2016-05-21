@@ -1,0 +1,494 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7696C7F81CF039D500B52A61 /* Mercal.h in Headers */ = {isa = PBXBuildFile; fileRef = 7696C7F71CF039D500B52A61 /* Mercal.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7696C7FF1CF039D500B52A61 /* Mercal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7696C7F41CF039D500B52A61 /* Mercal.framework */; };
+		7696C8041CF039D500B52A61 /* DefaultQueueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7696C8031CF039D500B52A61 /* DefaultQueueTests.swift */; };
+		7696C80F1CF039EA00B52A61 /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7696C80E1CF039EA00B52A61 /* Queue.swift */; };
+		7696C8131CF03A4800B52A61 /* Job.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7696C8121CF03A4800B52A61 /* Job.swift */; };
+		7696C8151CF03A8C00B52A61 /* Consumer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7696C8141CF03A8C00B52A61 /* Consumer.swift */; };
+		7696C8171CF03D8300B52A61 /* ConsumerListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7696C8161CF03D8300B52A61 /* ConsumerListener.swift */; };
+		7696C8191CF0413A00B52A61 /* Jobs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7696C8181CF0413A00B52A61 /* Jobs.swift */; };
+		7696C81B1CF0421300B52A61 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7696C81A1CF0421300B52A61 /* Task.swift */; };
+		7696C81D1CF0430500B52A61 /* Execution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7696C81C1CF0430500B52A61 /* Execution.swift */; };
+		7696C81F1CF0451600B52A61 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7696C81E1CF0451600B52A61 /* Result.swift */; };
+		7696C8211CF04F0100B52A61 /* Signal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7696C8201CF04F0100B52A61 /* Signal.swift */; };
+		7696C8251CF04FF400B52A61 /* Condition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7696C8241CF04FF400B52A61 /* Condition.swift */; };
+		7696C8271CF050AF00B52A61 /* Analyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7696C8261CF050AF00B52A61 /* Analyzer.swift */; };
+		7696C8291CF0522A00B52A61 /* Check.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7696C8281CF0522A00B52A61 /* Check.swift */; };
+		7696C82B1CF0533B00B52A61 /* Dispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7696C82A1CF0533B00B52A61 /* Dispatcher.swift */; };
+		7696C82D1CF0552200B52A61 /* GCDDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7696C82C1CF0552200B52A61 /* GCDDispatcher.swift */; };
+		76F05E981CF0B00300E91C19 /* DefaultQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F05E971CF0B00300E91C19 /* DefaultQueue.swift */; };
+		76F05E9A1CF0B58100E91C19 /* TickCallback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F05E991CF0B58100E91C19 /* TickCallback.swift */; };
+		76F05E9C1CF0B5EC00E91C19 /* Outcome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F05E9B1CF0B5EC00E91C19 /* Outcome.swift */; };
+		76F05EA11CF0B82600E91C19 /* fixturePredefinedConsumer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F05EA01CF0B82600E91C19 /* fixturePredefinedConsumer.swift */; };
+		76F05EA31CF0BD0600E91C19 /* fixturePredefinedCondition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F05EA21CF0BD0600E91C19 /* fixturePredefinedCondition.swift */; };
+		76F05EA51CF0C68C00E91C19 /* fixtureFailingCondition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F05EA41CF0C68C00E91C19 /* fixtureFailingCondition.swift */; };
+		76F05EA71CF0D4AF00E91C19 /* fixtureFailingSynchronouslyTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F05EA61CF0D4AF00E91C19 /* fixtureFailingSynchronouslyTask.swift */; };
+		76F05EA91CF0EA8E00E91C19 /* fixturePredefinedJobTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F05EA81CF0EA8E00E91C19 /* fixturePredefinedJobTask.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7696C8001CF039D500B52A61 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7696C7EB1CF039D500B52A61 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7696C7F31CF039D500B52A61;
+			remoteInfo = Mercal;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		7696C7F41CF039D500B52A61 /* Mercal.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Mercal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7696C7F71CF039D500B52A61 /* Mercal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Mercal.h; sourceTree = "<group>"; };
+		7696C7F91CF039D500B52A61 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7696C7FE1CF039D500B52A61 /* MercalTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MercalTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7696C8031CF039D500B52A61 /* DefaultQueueTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultQueueTests.swift; sourceTree = "<group>"; };
+		7696C8051CF039D500B52A61 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7696C80E1CF039EA00B52A61 /* Queue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
+		7696C8121CF03A4800B52A61 /* Job.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Job.swift; sourceTree = "<group>"; };
+		7696C8141CF03A8C00B52A61 /* Consumer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Consumer.swift; sourceTree = "<group>"; };
+		7696C8161CF03D8300B52A61 /* ConsumerListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsumerListener.swift; sourceTree = "<group>"; };
+		7696C8181CF0413A00B52A61 /* Jobs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Jobs.swift; sourceTree = "<group>"; };
+		7696C81A1CF0421300B52A61 /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
+		7696C81C1CF0430500B52A61 /* Execution.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Execution.swift; sourceTree = "<group>"; };
+		7696C81E1CF0451600B52A61 /* Result.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
+		7696C8201CF04F0100B52A61 /* Signal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Signal.swift; sourceTree = "<group>"; };
+		7696C8241CF04FF400B52A61 /* Condition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Condition.swift; sourceTree = "<group>"; };
+		7696C8261CF050AF00B52A61 /* Analyzer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Analyzer.swift; sourceTree = "<group>"; };
+		7696C8281CF0522A00B52A61 /* Check.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Check.swift; sourceTree = "<group>"; };
+		7696C82A1CF0533B00B52A61 /* Dispatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dispatcher.swift; sourceTree = "<group>"; };
+		7696C82C1CF0552200B52A61 /* GCDDispatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDDispatcher.swift; sourceTree = "<group>"; };
+		76F05E971CF0B00300E91C19 /* DefaultQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultQueue.swift; sourceTree = "<group>"; };
+		76F05E991CF0B58100E91C19 /* TickCallback.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TickCallback.swift; sourceTree = "<group>"; };
+		76F05E9B1CF0B5EC00E91C19 /* Outcome.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Outcome.swift; sourceTree = "<group>"; };
+		76F05EA01CF0B82600E91C19 /* fixturePredefinedConsumer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = fixturePredefinedConsumer.swift; sourceTree = "<group>"; };
+		76F05EA21CF0BD0600E91C19 /* fixturePredefinedCondition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = fixturePredefinedCondition.swift; sourceTree = "<group>"; };
+		76F05EA41CF0C68C00E91C19 /* fixtureFailingCondition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = fixtureFailingCondition.swift; sourceTree = "<group>"; };
+		76F05EA61CF0D4AF00E91C19 /* fixtureFailingSynchronouslyTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = fixtureFailingSynchronouslyTask.swift; sourceTree = "<group>"; };
+		76F05EA81CF0EA8E00E91C19 /* fixturePredefinedJobTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = fixturePredefinedJobTask.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7696C7F01CF039D500B52A61 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7696C7FB1CF039D500B52A61 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7696C7FF1CF039D500B52A61 /* Mercal.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		7696C7EA1CF039D500B52A61 = {
+			isa = PBXGroup;
+			children = (
+				7696C7F61CF039D500B52A61 /* Mercal */,
+				7696C8021CF039D500B52A61 /* MercalTests */,
+				7696C7F51CF039D500B52A61 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		7696C7F51CF039D500B52A61 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7696C7F41CF039D500B52A61 /* Mercal.framework */,
+				7696C7FE1CF039D500B52A61 /* MercalTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7696C7F61CF039D500B52A61 /* Mercal */ = {
+			isa = PBXGroup;
+			children = (
+				7696C7F71CF039D500B52A61 /* Mercal.h */,
+				7696C7F91CF039D500B52A61 /* Info.plist */,
+				7696C80E1CF039EA00B52A61 /* Queue.swift */,
+				7696C8121CF03A4800B52A61 /* Job.swift */,
+				7696C8141CF03A8C00B52A61 /* Consumer.swift */,
+				7696C8161CF03D8300B52A61 /* ConsumerListener.swift */,
+				7696C8181CF0413A00B52A61 /* Jobs.swift */,
+				7696C81A1CF0421300B52A61 /* Task.swift */,
+				7696C81C1CF0430500B52A61 /* Execution.swift */,
+				7696C81E1CF0451600B52A61 /* Result.swift */,
+				7696C8201CF04F0100B52A61 /* Signal.swift */,
+				7696C8241CF04FF400B52A61 /* Condition.swift */,
+				7696C8261CF050AF00B52A61 /* Analyzer.swift */,
+				7696C8281CF0522A00B52A61 /* Check.swift */,
+				7696C82A1CF0533B00B52A61 /* Dispatcher.swift */,
+				7696C82C1CF0552200B52A61 /* GCDDispatcher.swift */,
+				76F05E971CF0B00300E91C19 /* DefaultQueue.swift */,
+				76F05E991CF0B58100E91C19 /* TickCallback.swift */,
+				76F05E9B1CF0B5EC00E91C19 /* Outcome.swift */,
+			);
+			path = Mercal;
+			sourceTree = "<group>";
+		};
+		7696C8021CF039D500B52A61 /* MercalTests */ = {
+			isa = PBXGroup;
+			children = (
+				76F05E9D1CF0B71600E91C19 /* fixtures */,
+				7696C8031CF039D500B52A61 /* DefaultQueueTests.swift */,
+				7696C8051CF039D500B52A61 /* Info.plist */,
+			);
+			path = MercalTests;
+			sourceTree = "<group>";
+		};
+		76F05E9D1CF0B71600E91C19 /* fixtures */ = {
+			isa = PBXGroup;
+			children = (
+				76F05EA01CF0B82600E91C19 /* fixturePredefinedConsumer.swift */,
+				76F05EA21CF0BD0600E91C19 /* fixturePredefinedCondition.swift */,
+				76F05EA41CF0C68C00E91C19 /* fixtureFailingCondition.swift */,
+				76F05EA61CF0D4AF00E91C19 /* fixtureFailingSynchronouslyTask.swift */,
+				76F05EA81CF0EA8E00E91C19 /* fixturePredefinedJobTask.swift */,
+			);
+			path = fixtures;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		7696C7F11CF039D500B52A61 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7696C7F81CF039D500B52A61 /* Mercal.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		7696C7F31CF039D500B52A61 /* Mercal */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7696C8081CF039D500B52A61 /* Build configuration list for PBXNativeTarget "Mercal" */;
+			buildPhases = (
+				7696C7EF1CF039D500B52A61 /* Sources */,
+				7696C7F01CF039D500B52A61 /* Frameworks */,
+				7696C7F11CF039D500B52A61 /* Headers */,
+				7696C7F21CF039D500B52A61 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Mercal;
+			productName = Mercal;
+			productReference = 7696C7F41CF039D500B52A61 /* Mercal.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		7696C7FD1CF039D500B52A61 /* MercalTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7696C80B1CF039D500B52A61 /* Build configuration list for PBXNativeTarget "MercalTests" */;
+			buildPhases = (
+				7696C7FA1CF039D500B52A61 /* Sources */,
+				7696C7FB1CF039D500B52A61 /* Frameworks */,
+				7696C7FC1CF039D500B52A61 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7696C8011CF039D500B52A61 /* PBXTargetDependency */,
+			);
+			name = MercalTests;
+			productName = MercalTests;
+			productReference = 7696C7FE1CF039D500B52A61 /* MercalTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		7696C7EB1CF039D500B52A61 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = Bithavoc;
+				TargetAttributes = {
+					7696C7F31CF039D500B52A61 = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
+					7696C7FD1CF039D500B52A61 = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
+				};
+			};
+			buildConfigurationList = 7696C7EE1CF039D500B52A61 /* Build configuration list for PBXProject "Mercal" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 7696C7EA1CF039D500B52A61;
+			productRefGroup = 7696C7F51CF039D500B52A61 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				7696C7F31CF039D500B52A61 /* Mercal */,
+				7696C7FD1CF039D500B52A61 /* MercalTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		7696C7F21CF039D500B52A61 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7696C7FC1CF039D500B52A61 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7696C7EF1CF039D500B52A61 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7696C80F1CF039EA00B52A61 /* Queue.swift in Sources */,
+				7696C82B1CF0533B00B52A61 /* Dispatcher.swift in Sources */,
+				76F05E9C1CF0B5EC00E91C19 /* Outcome.swift in Sources */,
+				7696C8131CF03A4800B52A61 /* Job.swift in Sources */,
+				7696C8191CF0413A00B52A61 /* Jobs.swift in Sources */,
+				76F05E9A1CF0B58100E91C19 /* TickCallback.swift in Sources */,
+				7696C81D1CF0430500B52A61 /* Execution.swift in Sources */,
+				7696C8251CF04FF400B52A61 /* Condition.swift in Sources */,
+				7696C8211CF04F0100B52A61 /* Signal.swift in Sources */,
+				7696C8151CF03A8C00B52A61 /* Consumer.swift in Sources */,
+				7696C81B1CF0421300B52A61 /* Task.swift in Sources */,
+				7696C8291CF0522A00B52A61 /* Check.swift in Sources */,
+				7696C81F1CF0451600B52A61 /* Result.swift in Sources */,
+				7696C82D1CF0552200B52A61 /* GCDDispatcher.swift in Sources */,
+				7696C8271CF050AF00B52A61 /* Analyzer.swift in Sources */,
+				7696C8171CF03D8300B52A61 /* ConsumerListener.swift in Sources */,
+				76F05E981CF0B00300E91C19 /* DefaultQueue.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7696C7FA1CF039D500B52A61 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				76F05EA91CF0EA8E00E91C19 /* fixturePredefinedJobTask.swift in Sources */,
+				76F05EA71CF0D4AF00E91C19 /* fixtureFailingSynchronouslyTask.swift in Sources */,
+				76F05EA51CF0C68C00E91C19 /* fixtureFailingCondition.swift in Sources */,
+				7696C8041CF039D500B52A61 /* DefaultQueueTests.swift in Sources */,
+				76F05EA11CF0B82600E91C19 /* fixturePredefinedConsumer.swift in Sources */,
+				76F05EA31CF0BD0600E91C19 /* fixturePredefinedCondition.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7696C8011CF039D500B52A61 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7696C7F31CF039D500B52A61 /* Mercal */;
+			targetProxy = 7696C8001CF039D500B52A61 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		7696C8061CF039D500B52A61 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		7696C8071CF039D500B52A61 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		7696C8091CF039D500B52A61 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Mercal/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = io.bithavoc.Mercal;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		7696C80A1CF039D500B52A61 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Mercal/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = io.bithavoc.Mercal;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		7696C80C1CF039D500B52A61 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = MercalTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = io.bithavoc.MercalTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		7696C80D1CF039D500B52A61 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = MercalTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = io.bithavoc.MercalTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7696C7EE1CF039D500B52A61 /* Build configuration list for PBXProject "Mercal" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7696C8061CF039D500B52A61 /* Debug */,
+				7696C8071CF039D500B52A61 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7696C8081CF039D500B52A61 /* Build configuration list for PBXNativeTarget "Mercal" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7696C8091CF039D500B52A61 /* Debug */,
+				7696C80A1CF039D500B52A61 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7696C80B1CF039D500B52A61 /* Build configuration list for PBXNativeTarget "MercalTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7696C80C1CF039D500B52A61 /* Debug */,
+				7696C80D1CF039D500B52A61 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 7696C7EB1CF039D500B52A61 /* Project object */;
+}
