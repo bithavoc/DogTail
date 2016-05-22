@@ -38,4 +38,7 @@ public enum Outcome {
     
     // task was retried by an analyzer
     case AnalyzedTaskRetry(job: Job, analyzer: Analyzer, after: NSDate)
+    
+    // task asked to be retried
+    case Retry(job: Job, after: NSDate)
 }

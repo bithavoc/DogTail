@@ -9,7 +9,7 @@
 import Foundation
 
 public enum Result {
-    case Retry(after: NSDate)
     case Completed
+    case Retry(after: NSDate)
     case Failed(error: ErrorType)
 }

@@ -36,6 +36,7 @@
 		76F05EAD1CF1443400E91C19 /* fixturePredefinedAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F05EAC1CF1443400E91C19 /* fixturePredefinedAnalyzer.swift */; };
 		76F05EAF1CF1456100E91C19 /* fixtureJob.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F05EAE1CF1456100E91C19 /* fixtureJob.swift */; };
 		76F05EB11CF145D800E91C19 /* fixtureConsumer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F05EB01CF145D800E91C19 /* fixtureConsumer.swift */; };
+		76F05EB31CF2021200E91C19 /* fixtureSynchronouslyTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F05EB21CF2021200E91C19 /* fixtureSynchronouslyTask.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +82,7 @@
 		76F05EAC1CF1443400E91C19 /* fixturePredefinedAnalyzer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = fixturePredefinedAnalyzer.swift; sourceTree = "<group>"; };
 		76F05EAE1CF1456100E91C19 /* fixtureJob.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = fixtureJob.swift; sourceTree = "<group>"; };
 		76F05EB01CF145D800E91C19 /* fixtureConsumer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = fixtureConsumer.swift; sourceTree = "<group>"; };
+		76F05EB21CF2021200E91C19 /* fixtureSynchronouslyTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = fixtureSynchronouslyTask.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,6 +170,7 @@
 				76F05EAC1CF1443400E91C19 /* fixturePredefinedAnalyzer.swift */,
 				76F05EAE1CF1456100E91C19 /* fixtureJob.swift */,
 				76F05EB01CF145D800E91C19 /* fixtureConsumer.swift */,
+				76F05EB21CF2021200E91C19 /* fixtureSynchronouslyTask.swift */,
 			);
 			path = fixtures;
 			sourceTree = "<group>";
@@ -314,6 +317,7 @@
 				76F05EAF1CF1456100E91C19 /* fixtureJob.swift in Sources */,
 				76F05EA31CF0BD0600E91C19 /* fixturePredefinedCondition.swift in Sources */,
 				76F05EAD1CF1443400E91C19 /* fixturePredefinedAnalyzer.swift in Sources */,
+				76F05EB31CF2021200E91C19 /* fixtureSynchronouslyTask.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

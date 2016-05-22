@@ -105,10 +105,20 @@ public class DefaultQueue : Queue {
         let task = job.task
         do {
             let execution = try task.execute()
+            return handleExecution(execution, job: job)
         } catch(let err) {
             return handleTaskFailure(err, job: job)
         }
-        return .Completed(job: job)
+    }
+    
+    private func handleExecution(execution: Execution, job: Job) -> Outcome {
+        switch execution {
+        case .Synchronous(let result):
+            return handleTaskResult(result, job: job)
+        default:
+            print("Outcome unknown async execution")
+            return Outcome.Empty
+        }
     }
     
     private func handleTaskFailure(err: ErrorType, job: Job) -> Outcome {
@@ -147,6 +157,41 @@ public class DefaultQueue : Queue {
             return .AnalyzedTaskRetry(job: job, analyzer: analyzer, after: after)
         } catch(let err) {
             return .RetryFailure(error: err, job: job)
+        }
+    }
+    
+    private func handleTaskResult(result: Result, job:Job) -> Outcome {
+        switch result {
+        case .Completed:
+            return handleTaskCompleted(job)
+        case .Retry(let after):
+            return handleTaskRetry(job, after: after)
+        case .Failed(let error):
+            return handleTaskFailure(error, job: job)
+        }
+    }
+    
+    private func handleTaskCompleted(job: Job) -> Outcome {
+        defer {
+            self.wakeUp()
+        }
+        do {
+            try job.consume()
+            return .Completed(job: job)
+        } catch(let err) {
+            return .ConsumeFailure(error: err, job: job)
+        }
+    }
+    
+    private func handleTaskRetry(job: Job, after: NSDate) -> Outcome {
+        defer {
+            self.wakeUp()
+        }
+        do {
+            try job.retryAfter(after)
+            return .Retry(job: job, after: after)
+        } catch(let err) {
+            return .ConsumeFailure(error: err, job: job)
         }
     }
     
