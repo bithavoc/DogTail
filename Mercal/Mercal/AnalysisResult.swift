@@ -1,5 +1,5 @@
 //
-//  Analyzer.swift
+//  AnalysisResult.swift
 //  Mercal
 //
 //  Created by Johan Hernandez on 5/21/16.
@@ -8,6 +8,8 @@
 
 import Foundation
 
-public protocol Analyzer {
-    func analyze(error:ErrorType, task: Task) -> AnalysisResult
+public enum AnalysisResult {
+    case Completed
+    case Retry(after: NSDate)
+    case Unknown
 }

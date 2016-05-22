@@ -16,7 +16,7 @@ public protocol Queue {
     var conditions: [Condition] { get set }
     
     // analyzers to check conditions on errors
-    var analyzers: [Analyzer] { get }
+    var analyzers: [Analyzer] { get set }
     
     var ticked: TickCallback? { get set }
     

@@ -10,6 +10,6 @@ import Foundation
 
 public enum Result {
     case Retry(after: NSDate)
-    case Success
+    case Completed
     case Failed(error: ErrorType)
 }

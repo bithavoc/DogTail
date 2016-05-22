@@ -14,12 +14,13 @@ import Foundation
 public class DefaultQueue : Queue {
     public var signals = [Signal]()
     public var conditions = [Condition]()
-    public private(set) var analyzers = [Analyzer]()
+    public var analyzers = [Analyzer]()
     
     public var ticked: TickCallback?
     
     private var consumer: Consumer!
     private var dispatcher: Dispatcher!
+    private let lockQueue = dispatch_queue_create("Mercal.DefaultQueue", nil)
     
     public init() {
         
@@ -30,11 +31,29 @@ public class DefaultQueue : Queue {
         self.consumer = consumer
         self.dispatcher = dispatcher
         subscribeToSignals()
+        self.activated = true
         wakeUp()
     }
     
+    private var _activated = false
+    private var activated:Bool {
+        get {
+            var value = false
+            dispatch_sync(lockQueue) {
+                value = self._activated
+            }
+            return value
+        }
+        set(value) {
+            dispatch_sync(lockQueue) {
+               self._activated = value
+            }
+        }
+    }
+    
     public func shutdown() {
-        
+        self.signals.removeAll()
+        self.activated = false
     }
     
     private func subscribeToSignals() {
@@ -52,6 +71,9 @@ public class DefaultQueue : Queue {
     }
     
     private func tick() {
+        if !activated {
+            return
+        }
         let outcome = createTicketOutcome()
         self.ticked?(outcome: outcome)
     }
@@ -84,13 +106,48 @@ public class DefaultQueue : Queue {
         do {
             let execution = try task.execute()
         } catch(let err) {
-            return handleTaskFailure(err, task: task)
+            return handleTaskFailure(err, job: job)
         }
-        return .Processed(job: job)
+        return .Completed(job: job)
     }
     
-    private func handleTaskFailure(err: ErrorType, task: Task) -> Outcome {
-        return .UnanalyzedTaskFailure(error: err, task: task)
+    private func handleTaskFailure(err: ErrorType, job: Job) -> Outcome {
+        for analyzer in self.analyzers {
+            let analysis = analyzer.analyze(err, task: job.task)
+            switch analysis {
+            case .Completed:
+                return handleAnalyzerTaskCompleted(job, analyzer: analyzer)
+            case .Retry(let after):
+                return handleAnalyzerTaskRetry(job, analyzer: analyzer, after: after)
+            case .Unknown:
+                continue
+            }
+        }
+        return .UnanalyzedTaskFailure(error: err, task: job.task)
+    }
+    
+    private func handleAnalyzerTaskCompleted(job: Job, analyzer: Analyzer) -> Outcome {
+        defer {
+            self.wakeUp()
+        }
+        do {
+            try job.consume()
+            return .AnalyzedTaskCompleted(job: job, analyzer: analyzer)
+        } catch(let err) {
+            return .ConsumeFailure(error: err, job: job)
+        }
+    }
+    
+    private func handleAnalyzerTaskRetry(job: Job, analyzer: Analyzer, after: NSDate) -> Outcome {
+        defer {
+            self.wakeUp()
+        }
+        do {
+            try job.retryAfter(after)
+            return .AnalyzedTaskRetry(job: job, analyzer: analyzer, after: after)
+        } catch(let err) {
+            return .RetryFailure(error: err, job: job)
+        }
     }
     
     private func checkConditions() -> awaitConditionResult {

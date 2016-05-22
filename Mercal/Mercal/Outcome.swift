@@ -24,6 +24,18 @@ public enum Outcome {
     // task failure handled without analyzer
     case UnanalyzedTaskFailure(error: ErrorType, task: Task)
     
-    // task processed successfully
-    case Processed(job: Job)
+    // failure found while consuming job
+    case ConsumeFailure(error: ErrorType, job: Job)
+    
+    // failure found retrying job
+    case RetryFailure(error: ErrorType, job: Job)
+    
+    // task completed successfully
+    case Completed(job: Job)
+    
+    // task was completed by an analyzer
+    case AnalyzedTaskCompleted(job: Job, analyzer: Analyzer)
+    
+    // task was retried by an analyzer
+    case AnalyzedTaskRetry(job: Job, analyzer: Analyzer, after: NSDate)
 }

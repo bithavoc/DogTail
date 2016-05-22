@@ -1,5 +1,5 @@
 //
-//  Analyzer.swift
+//  fixtureJob.swift
 //  Mercal
 //
 //  Created by Johan Hernandez on 5/21/16.
@@ -8,6 +8,6 @@
 
 import Foundation
 
-public protocol Analyzer {
-    func analyze(error:ErrorType, task: Task) -> AnalysisResult
+protocol fixtureJob {
+    var consumer: fixtureConsumer? { get set }
 }

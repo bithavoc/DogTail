@@ -14,7 +14,7 @@ public protocol Job {
     func consume() throws
     
     // Unlocks the job in the store optionally setting a date to retry after
-    func restore(retryAfter: NSDate) throws
+    func retryAfter(after: NSDate) throws
     
     // Task attached to this job
     var task: Task { get }
