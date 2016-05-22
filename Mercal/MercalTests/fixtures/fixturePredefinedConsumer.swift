@@ -9,30 +9,36 @@
 import Foundation
 import Mercal
 
-class fixturePredefinedConsumer<T where T:Job, T:fixtureJob> : Consumer, fixtureConsumer {
-    private var job: T?
-    init(job: T?) {
-        self.job = job
-        if var job = job {
-            job.consumer = self
-        }
+class fixturePredefinedConsumer : Consumer, fixtureConsumer {
+    init() {
+        
+    }
+    
+    convenience init(job: fixtureJob) {
+        self.init()
+        addJob(job)
+    }
+    
+    private var jobs = [fixtureJob]()
+    
+    func addJob(newJob: fixtureJob) {
+        let job = newJob
+        job.consumer = self
+        jobs.append(job)
     }
     
     func next() throws -> Job? {
-        if let after = jobAfter {
-            if NSDate().timeIntervalSinceDate(after) < 0 {
-                return nil
-            }
+        return jobs.filter { entry in entry.after == nil || NSDate().timeIntervalSinceDate(entry.after!) < 0 }.first
+    }
+    
+    func jobCompleted(job: fixtureJob) {
+        guard let index = jobs.indexOf(job) else {
+            return
         }
-        return self.job
+        jobs.removeAtIndex(index)
     }
     
-    func jobCompleted(job: Job) {
-        self.job = nil
-    }
-    
-    var jobAfter:NSDate?
-    func jobRetry(job: Job, after: NSDate) {
-        jobAfter = after
+    func clear() {
+        jobs.removeAll()
     }
 }

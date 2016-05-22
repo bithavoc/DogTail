@@ -8,8 +8,8 @@
 
 import Foundation
 
-public typealias SignalCallback = () -> Void
+public typealias SignalEmitBlock = () -> Void
 
 public protocol Signal {
-    func on(callback: SignalCallback)
+    var emitted:SignalEmitBlock? { get set }
 }

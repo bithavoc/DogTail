@@ -31,12 +31,12 @@
 		76F05EA31CF0BD0600E91C19 /* fixturePredefinedCondition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F05EA21CF0BD0600E91C19 /* fixturePredefinedCondition.swift */; };
 		76F05EA51CF0C68C00E91C19 /* fixtureFailingCondition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F05EA41CF0C68C00E91C19 /* fixtureFailingCondition.swift */; };
 		76F05EA71CF0D4AF00E91C19 /* fixtureFailingSynchronouslyTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F05EA61CF0D4AF00E91C19 /* fixtureFailingSynchronouslyTask.swift */; };
-		76F05EA91CF0EA8E00E91C19 /* fixturePredefinedJobTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F05EA81CF0EA8E00E91C19 /* fixturePredefinedJobTask.swift */; };
 		76F05EAB1CF12D6100E91C19 /* AnalysisResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F05EAA1CF12D6100E91C19 /* AnalysisResult.swift */; };
 		76F05EAD1CF1443400E91C19 /* fixturePredefinedAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F05EAC1CF1443400E91C19 /* fixturePredefinedAnalyzer.swift */; };
 		76F05EAF1CF1456100E91C19 /* fixtureJob.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F05EAE1CF1456100E91C19 /* fixtureJob.swift */; };
 		76F05EB11CF145D800E91C19 /* fixtureConsumer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F05EB01CF145D800E91C19 /* fixtureConsumer.swift */; };
 		76F05EB31CF2021200E91C19 /* fixtureSynchronouslyTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F05EB21CF2021200E91C19 /* fixtureSynchronouslyTask.swift */; };
+		76F05EB51CF25B5F00E91C19 /* SimpleSignal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F05EB41CF25B5F00E91C19 /* SimpleSignal.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,12 +77,12 @@
 		76F05EA21CF0BD0600E91C19 /* fixturePredefinedCondition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = fixturePredefinedCondition.swift; sourceTree = "<group>"; };
 		76F05EA41CF0C68C00E91C19 /* fixtureFailingCondition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = fixtureFailingCondition.swift; sourceTree = "<group>"; };
 		76F05EA61CF0D4AF00E91C19 /* fixtureFailingSynchronouslyTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = fixtureFailingSynchronouslyTask.swift; sourceTree = "<group>"; };
-		76F05EA81CF0EA8E00E91C19 /* fixturePredefinedJobTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = fixturePredefinedJobTask.swift; sourceTree = "<group>"; };
 		76F05EAA1CF12D6100E91C19 /* AnalysisResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalysisResult.swift; sourceTree = "<group>"; };
 		76F05EAC1CF1443400E91C19 /* fixturePredefinedAnalyzer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = fixturePredefinedAnalyzer.swift; sourceTree = "<group>"; };
 		76F05EAE1CF1456100E91C19 /* fixtureJob.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = fixtureJob.swift; sourceTree = "<group>"; };
 		76F05EB01CF145D800E91C19 /* fixtureConsumer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = fixtureConsumer.swift; sourceTree = "<group>"; };
 		76F05EB21CF2021200E91C19 /* fixtureSynchronouslyTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = fixtureSynchronouslyTask.swift; sourceTree = "<group>"; };
+		76F05EB41CF25B5F00E91C19 /* SimpleSignal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleSignal.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,6 +145,7 @@
 				76F05E991CF0B58100E91C19 /* TickCallback.swift */,
 				76F05E9B1CF0B5EC00E91C19 /* Outcome.swift */,
 				76F05EAA1CF12D6100E91C19 /* AnalysisResult.swift */,
+				76F05EB41CF25B5F00E91C19 /* SimpleSignal.swift */,
 			);
 			path = Mercal;
 			sourceTree = "<group>";
@@ -166,7 +167,6 @@
 				76F05EA21CF0BD0600E91C19 /* fixturePredefinedCondition.swift */,
 				76F05EA41CF0C68C00E91C19 /* fixtureFailingCondition.swift */,
 				76F05EA61CF0D4AF00E91C19 /* fixtureFailingSynchronouslyTask.swift */,
-				76F05EA81CF0EA8E00E91C19 /* fixturePredefinedJobTask.swift */,
 				76F05EAC1CF1443400E91C19 /* fixturePredefinedAnalyzer.swift */,
 				76F05EAE1CF1456100E91C19 /* fixtureJob.swift */,
 				76F05EB01CF145D800E91C19 /* fixtureConsumer.swift */,
@@ -297,6 +297,7 @@
 				7696C8291CF0522A00B52A61 /* Check.swift in Sources */,
 				7696C81F1CF0451600B52A61 /* Result.swift in Sources */,
 				7696C82D1CF0552200B52A61 /* GCDDispatcher.swift in Sources */,
+				76F05EB51CF25B5F00E91C19 /* SimpleSignal.swift in Sources */,
 				7696C8271CF050AF00B52A61 /* Analyzer.swift in Sources */,
 				7696C8171CF03D8300B52A61 /* ConsumerListener.swift in Sources */,
 				76F05EAB1CF12D6100E91C19 /* AnalysisResult.swift in Sources */,
@@ -309,7 +310,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				76F05EB11CF145D800E91C19 /* fixtureConsumer.swift in Sources */,
-				76F05EA91CF0EA8E00E91C19 /* fixturePredefinedJobTask.swift in Sources */,
 				76F05EA71CF0D4AF00E91C19 /* fixtureFailingSynchronouslyTask.swift in Sources */,
 				76F05EA51CF0C68C00E91C19 /* fixtureFailingCondition.swift in Sources */,
 				7696C8041CF039D500B52A61 /* DefaultQueueTests.swift in Sources */,

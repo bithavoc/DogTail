@@ -10,6 +10,5 @@ import Foundation
 import Mercal
 
 protocol fixtureConsumer {
-    func jobCompleted(job: Job)
-    func jobRetry(job: Job, after: NSDate)
+    func jobCompleted(job: fixtureJob)
 }

@@ -20,17 +20,16 @@ public class DefaultQueue : Queue {
     
     private var consumer: Consumer!
     private var dispatcher: Dispatcher!
-    private let lockQueue = dispatch_queue_create("Mercal.DefaultQueue", nil)
+    private let lockQueue = dispatch_queue_create("Mercal.SyncQueue", nil)
     
     public init() {
         
     }
     
     public func activate(consumer: Consumer, dispatcher: Dispatcher) {
-        self.subscribeToSignals()
         self.consumer = consumer
         self.dispatcher = dispatcher
-        subscribeToSignals()
+        self.changeSignalsSubscription(subscribe: true)
         self.activated = true
         wakeUp()
     }
@@ -51,15 +50,37 @@ public class DefaultQueue : Queue {
         }
     }
     
+    private var _executing = false
+    private var executing:Bool {
+        get {
+            var value = false
+            dispatch_sync(lockQueue) {
+                value = self._executing
+            }
+            return value
+        }
+        set(value) {
+            dispatch_sync(lockQueue) {
+                self._executing = value
+            }
+        }
+    }
+    
     public func shutdown() {
-        self.signals.removeAll()
+        self.changeSignalsSubscription(subscribe: false)
         self.activated = false
     }
     
-    private func subscribeToSignals() {
-        for signal in signals {
-            signal.on { [weak self] in
-                self?.wakeUp()
+    private func changeSignalsSubscription(subscribe subscribing:Bool) {
+        for var signal in signals {
+            if subscribing {
+                signal.emitted = { [weak self] in
+                    self?.wakeUp()
+                }
+            } else {
+                for var signal in signals {
+                    signal.emitted = nil
+                }
             }
         }
     }
@@ -74,7 +95,19 @@ public class DefaultQueue : Queue {
         if !activated {
             return
         }
+        if executing {
+            return
+        }
+        executing = true
+        defer {
+            executing = false
+        }
         let outcome = createTicketOutcome()
+        switch outcome {
+        case .Empty: break
+        default:
+            wakeUp()
+        }
         self.ticked?(outcome: outcome)
     }
     
@@ -137,9 +170,6 @@ public class DefaultQueue : Queue {
     }
     
     private func handleAnalyzerTaskCompleted(job: Job, analyzer: Analyzer) -> Outcome {
-        defer {
-            self.wakeUp()
-        }
         do {
             try job.consume()
             return .AnalyzedTaskCompleted(job: job, analyzer: analyzer)
@@ -149,9 +179,6 @@ public class DefaultQueue : Queue {
     }
     
     private func handleAnalyzerTaskRetry(job: Job, analyzer: Analyzer, after: NSDate) -> Outcome {
-        defer {
-            self.wakeUp()
-        }
         do {
             try job.retryAfter(after)
             return .AnalyzedTaskRetry(job: job, analyzer: analyzer, after: after)
@@ -172,9 +199,6 @@ public class DefaultQueue : Queue {
     }
     
     private func handleTaskCompleted(job: Job) -> Outcome {
-        defer {
-            self.wakeUp()
-        }
         do {
             try job.consume()
             return .Completed(job: job)
@@ -184,9 +208,6 @@ public class DefaultQueue : Queue {
     }
     
     private func handleTaskRetry(job: Job, after: NSDate) -> Outcome {
-        defer {
-            self.wakeUp()
-        }
         do {
             try job.retryAfter(after)
             return .Retry(job: job, after: after)

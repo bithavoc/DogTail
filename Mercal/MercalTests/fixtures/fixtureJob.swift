@@ -7,7 +7,26 @@
 //
 
 import Foundation
+import Mercal
 
-protocol fixtureJob {
-    var consumer: fixtureConsumer? { get set }
+class fixtureJob : NSObject, Job {
+    var consumer: fixtureConsumer?
+    var task:Task
+    init(task:Task) {
+        self.task = task
+    }
+    
+    var consumeCount:Int = 0
+    
+    func consume() throws {
+        consumeCount += 1
+        consumer?.jobCompleted(self)
+    }
+    
+    var retryCount:Int = 0
+    var after:NSDate?
+    func retryAfter(after: NSDate) throws {
+        retryCount += 1
+        self.after = after
+    }
 }
