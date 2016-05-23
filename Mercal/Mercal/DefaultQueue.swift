@@ -99,58 +99,64 @@ public class DefaultQueue : Queue {
             return
         }
         executing = true
-        defer {
-            executing = false
+        createTicketOutcome() { outcome in
+            defer {
+                self.executing = false
+            }
+            self.ticked?(outcome: outcome)
+            switch outcome {
+            case .Empty: break
+            default:
+                self.wakeUp()
+            }
         }
-        let outcome = createTicketOutcome()
-        switch outcome {
-        case .Empty: break
-        default:
-            wakeUp()
-        }
-        self.ticked?(outcome: outcome)
     }
     
-    private func createTicketOutcome() -> Outcome {
+    private typealias outcomeOutputBlock = (outcome: Outcome) -> Void
+    
+    private func createTicketOutcome(block: outcomeOutputBlock) {
         switch self.checkConditions() {
         case .Await(let condition):
-            return Outcome.ConditionAwait(condition: condition)
+            return block(outcome: Outcome.ConditionAwait(condition: condition))
         case .Error(let condition, let error):
-            return Outcome.ConditionError(error: error, condition: condition)
+            return block(outcome: Outcome.ConditionError(error: error, condition: condition))
         case .Ready:
-            return processNextJob()
+            processNextJob(block)
         }
     }
     
-    private func processNextJob() -> Outcome {
+    private func processNextJob(block: outcomeOutputBlock) {
         do {
             let job = try consumer.next()
-            return processJob(job)
+            return processJob(job, block: block)
         } catch let err {
-            return .ConsumerIterationError(error: err)
+            return block(outcome: .ConsumerIterationError(error: err))
         }
     }
     
-    private func processJob(job: Job?) -> Outcome {
+    private func processJob(job: Job?, block: outcomeOutputBlock) {
         guard let job = job else {
-            return .Empty
+            return block(outcome: .Empty)
         }
         let task = job.task
         do {
             let execution = try task.execute()
-            return handleExecution(execution, job: job)
+            return handleExecution(execution, job: job, block: block)
         } catch(let err) {
-            return handleTaskFailure(err, job: job)
+            return block(outcome: handleTaskFailure(err, job: job))
         }
     }
     
-    private func handleExecution(execution: Execution, job: Job) -> Outcome {
+    private func handleExecution(execution: Execution, job: Job, block: outcomeOutputBlock) {
         switch execution {
         case .Synchronous(let result):
-            return handleTaskResult(result, job: job)
-        default:
-            print("Outcome unknown async execution")
-            return Outcome.Empty
+            return block(outcome: handleTaskResult(result, job: job))
+        case .Asynchronous(let execution):
+            execution({ result in
+                self.dispatcher.addOperationWithBlock {
+                    block(outcome: self.handleTaskResult(result, job: job))
+                }
+            })
         }
     }
     

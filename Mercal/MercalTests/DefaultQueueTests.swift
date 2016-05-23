@@ -27,6 +27,7 @@ class DefaultQueueTests: XCTestCase {
         queue.conditions.append(expectedCondition)
         
         queue.ticked = { outcome in
+            queue.ticked = nil
             switch outcome {
             case .ConditionAwait(let condition):
                 guard let fixture = condition as? fixturePredefinedCondition else {
@@ -66,6 +67,7 @@ class DefaultQueueTests: XCTestCase {
         queue.conditions.append(expectedCondition)
         
         queue.ticked = { outcome in
+            queue.ticked = nil
             switch outcome {
             case .ConditionError(let err, let condition):
                 guard let fixture = condition as? fixtureFailingCondition else {
@@ -319,6 +321,296 @@ class DefaultQueueTests: XCTestCase {
         let backgroundQueue = NSOperationQueue()
         
         queue.ticked = { outcome in
+            consumer.clear()
+            queue.ticked = nil
+            switch outcome {
+            case .Retry(let job, _):
+                guard let fixtureJob = job as? fixtureJob else {
+                    print("unexpected job \(job)")
+                    return
+                }
+                if fixtureJob !== expectedJob {
+                    print("unexpected job \(job)")
+                    return
+                }
+                expectation.fulfill()
+            case .Empty:
+                print("expected test outcome \(outcome)")
+            default:
+                print("unexpected test outcome \(outcome)")
+            }
+        }
+        
+        queue.activate(consumer, dispatcher: backgroundQueue)
+        waitForExpectationsWithTimeout(10) { err in
+            
+        }
+        XCTAssertEqual(expectedJob.consumeCount, 0)
+        XCTAssertEqual(expectedJob.retryCount, 1)
+        XCTAssertEqual(expectedJob.after, expectedRetryDate)
+    }
+    
+    func testSynchronousTaskFailure() {
+        let expectation = expectationWithDescription("synchronous task failure")
+        let queue = DefaultQueue()
+        defer {
+            queue.shutdown()
+        }
+        let expectedTaskError = NSError(domain: "testSynchronousTaskFailure.error", code: 42, userInfo: nil)
+        let expectedTask = fixtureSynchronouslyTask(execution: .Synchronous(.Failed(error: expectedTaskError)))
+        let consumer = fixturePredefinedConsumer(job: fixtureJob(task: expectedTask))
+        
+        let backgroundQueue = NSOperationQueue()
+        
+        queue.ticked = { outcome in
+            consumer.clear()
+            queue.ticked = nil
+            switch outcome {
+            case .UnanalyzedTaskFailure(let error, let task):
+                guard let fixtureTask = task as? fixtureSynchronouslyTask else {
+                    print("unexpected task \(task)")
+                    return
+                }
+                if fixtureTask !== expectedTask {
+                    print("unexpected task \(fixtureTask) is not \(expectedTask)")
+                    return
+                }
+                let fixtureError = error as NSError
+                if fixtureError != expectedTaskError {
+                    print("unexpected error \(fixtureError) is not \(expectedTaskError)")
+                    return
+                }
+                expectation.fulfill()
+            default:
+                print("unexpected test outcome \(outcome)")
+            }
+        }
+        
+        queue.activate(consumer, dispatcher: backgroundQueue)
+        
+        waitForExpectationsWithTimeout(10) { err in
+            
+        }
+    }
+    
+    func testAsynchronouslyAnalyzedTaskCompletion() {
+        let expectation = expectationWithDescription("asynchronous analyzed task result")
+        let queue = DefaultQueue()
+        defer {
+            queue.shutdown()
+        }
+        let expectedAnalyzer = fixturePredefinedAnalyzer(result: .Completed)
+        queue.analyzers.append(expectedAnalyzer)
+        let expectedTaskError = NSError(domain: "testAsynchronouslyAnalyzedTaskCompletion.error", code: 42, userInfo: nil)
+        let expectedTask = fixtureSynchronouslyTask(execution: .Asynchronous({ done in
+            done(.Failed(error: expectedTaskError))
+        }))
+        let expectedJob = fixtureJob(task: expectedTask)
+        let consumer = fixturePredefinedConsumer(job: expectedJob)
+        
+        let backgroundQueue = NSOperationQueue()
+        
+        queue.ticked = { outcome in
+            switch outcome {
+            case .AnalyzedTaskCompleted(let job, let analyzer):
+                guard let fixtureJob = job as? fixtureJob else {
+                    print("unexpected job \(job)")
+                    return
+                }
+                if fixtureJob !== expectedJob {
+                    print("unexpected job \(job)")
+                    return
+                }
+                guard let fixtureAnalyzer = analyzer as? fixturePredefinedAnalyzer else {
+                    print("unexpected analyzer \(analyzer)")
+                    return
+                }
+                if fixtureAnalyzer !== expectedAnalyzer {
+                    print("unexpected analyzer \(fixtureAnalyzer)")
+                    return
+                }
+                expectation.fulfill()
+            case .Empty:
+                print("expected test outcome \(outcome)")
+            default:
+                print("unexpected test outcome \(outcome)")
+            }
+        }
+        
+        queue.activate(consumer, dispatcher: backgroundQueue)
+        
+        waitForExpectationsWithTimeout(10) { err in
+            
+        }
+        XCTAssertEqual(expectedJob.consumeCount, 1)
+    }
+
+    
+    func testAsynchronouslyAnalyzedTaskUnkownAndRetry() {
+        let expectation = expectationWithDescription("asynchronous analyzed task unknown and retry")
+        let queue = DefaultQueue()
+        defer {
+            queue.shutdown()
+        }
+        queue.analyzers.append(fixturePredefinedAnalyzer(result: .Unknown))
+        
+        let expectedRetryDate = NSDate().dateByAddingTimeInterval(100)
+        let expectedAnalyzer = fixturePredefinedAnalyzer(result: .Retry(after:expectedRetryDate))
+        queue.analyzers.append(expectedAnalyzer)
+        let expectedTaskError = NSError(domain: "testAsynchronouslyAnalyzedTaskRetry.error", code: 42, userInfo: nil)
+        let expectedTask = fixtureSynchronouslyTask(execution: .Asynchronous({ done in
+            done(.Failed(error: expectedTaskError))
+        }))
+        let expectedJob = fixtureJob(task: expectedTask)
+        let consumer = fixturePredefinedConsumer(job: expectedJob)
+        
+        let backgroundQueue = NSOperationQueue()
+        
+        queue.ticked = { outcome in
+            consumer.clear()
+            queue.ticked = nil
+            switch outcome {
+            case .AnalyzedTaskRetry(let job, let analyzer, _):
+                guard let fixtureJob = job as? fixtureJob else {
+                    print("unexpected job \(job)")
+                    return
+                }
+                if fixtureJob !== expectedJob {
+                    print("unexpected job \(job)")
+                    return
+                }
+                guard let fixtureAnalyzer = analyzer as? fixturePredefinedAnalyzer else {
+                    print("unexpected analyzer \(analyzer)")
+                    return
+                }
+                if fixtureAnalyzer !== expectedAnalyzer {
+                    print("unexpected analyzer \(fixtureAnalyzer)")
+                    return
+                }
+                expectation.fulfill()
+            case .Empty:
+                print("expected test outcome \(outcome)")
+            default:
+                print("unexpected test outcome \(outcome)")
+            }
+        }
+        
+        queue.activate(consumer, dispatcher: backgroundQueue)
+        
+        waitForExpectationsWithTimeout(10) { err in
+            
+        }
+        XCTAssertEqual(expectedJob.consumeCount, 0)
+        XCTAssertEqual(expectedJob.retryCount, 1)
+        XCTAssertEqual(expectedJob.after, expectedRetryDate)
+    }
+    
+    func testAsynchronouslyTaskCompletion() {
+        let expectation = expectationWithDescription("asynchronous task completion")
+        let queue = DefaultQueue()
+        defer {
+            queue.shutdown()
+        }
+        let expectedTask = fixtureSynchronouslyTask(execution: .Asynchronous({ done in
+            done(.Completed)
+        }))
+        let expectedJob = fixtureJob(task: expectedTask)
+        let consumer = fixturePredefinedConsumer(job: expectedJob)
+        
+        let backgroundQueue = NSOperationQueue()
+        
+        queue.ticked = { outcome in
+            consumer.clear()
+            queue.ticked = nil
+            switch outcome {
+            case .Completed(let job):
+                guard let fixtureJob = job as? fixtureJob else {
+                    print("unexpected job \(job)")
+                    return
+                }
+                if fixtureJob !== expectedJob {
+                    print("unexpected job \(job)")
+                    return
+                }
+                expectation.fulfill()
+            case .Empty:
+                print("expected test outcome \(outcome)")
+            default:
+                print("unexpected test outcome \(outcome)")
+            }
+        }
+        
+        queue.activate(consumer, dispatcher: backgroundQueue)
+        
+        waitForExpectationsWithTimeout(10) { err in
+            
+        }
+        XCTAssertEqual(expectedJob.consumeCount, 1)
+    }
+    
+    func testAsynchronousTaskFailure() {
+        let expectation = expectationWithDescription("asynchronous task failure")
+        let queue = DefaultQueue()
+        defer {
+            queue.shutdown()
+        }
+        let expectedTaskError = NSError(domain: "testAsynchronousTaskFailure.error", code: 42, userInfo: nil)
+        let expectedTask = fixtureSynchronouslyTask(execution: .Asynchronous({ done in
+            done(.Failed(error: expectedTaskError))
+        }))
+        let consumer = fixturePredefinedConsumer(job: fixtureJob(task: expectedTask))
+        
+        let backgroundQueue = NSOperationQueue()
+        
+        queue.ticked = { outcome in
+            consumer.clear()
+            queue.ticked = nil
+            switch outcome {
+            case .UnanalyzedTaskFailure(let error, let task):
+                guard let fixtureTask = task as? fixtureSynchronouslyTask else {
+                    print("unexpected task \(task)")
+                    return
+                }
+                if fixtureTask !== expectedTask {
+                    print("unexpected task \(fixtureTask) is not \(expectedTask)")
+                    return
+                }
+                let fixtureError = error as NSError
+                if fixtureError != expectedTaskError {
+                    print("unexpected error \(fixtureError) is not \(expectedTaskError)")
+                    return
+                }
+                expectation.fulfill()
+            default:
+                print("unexpected test outcome \(outcome)")
+            }
+        }
+        
+        queue.activate(consumer, dispatcher: backgroundQueue)
+        
+        waitForExpectationsWithTimeout(10) { err in
+            
+        }
+    }
+    
+    func testAsynchronousTaskRetry() {
+        let expectation = expectationWithDescription("synchronous task retry")
+        let queue = DefaultQueue()
+        defer {
+            queue.shutdown()
+        }
+        let expectedRetryDate = NSDate().dateByAddingTimeInterval(100)
+        let expectedTask = fixtureSynchronouslyTask(execution: .Asynchronous({ done in
+            done(.Retry(after: expectedRetryDate))
+        }))
+        let expectedJob = fixtureJob(task: expectedTask)
+        let consumer = fixturePredefinedConsumer(job: expectedJob)
+        
+        let backgroundQueue = NSOperationQueue()
+        
+        queue.ticked = { outcome in
+            consumer.clear()
+            queue.ticked = nil
             switch outcome {
             case .Retry(let job, _):
                 guard let fixtureJob = job as? fixtureJob else {
@@ -346,48 +638,7 @@ class DefaultQueueTests: XCTestCase {
         XCTAssertEqual(expectedJob.retryCount, 1)
         XCTAssertEqual(expectedJob.after, expectedRetryDate)
     }
-    
-    func testSynchronousTaskFailure() {
-        let expectation = expectationWithDescription("synchronous task failure")
-        let queue = DefaultQueue()
-        defer {
-            queue.shutdown()
-        }
-        let expectedTaskError = NSError(domain: "testSynchronousTaskFailure.error", code: 42, userInfo: nil)
-        let expectedTask = fixtureSynchronouslyTask(execution: .Synchronous(.Failed(error: expectedTaskError)))
-        let consumer = fixturePredefinedConsumer(job: fixtureJob(task: expectedTask))
-        
-        let backgroundQueue = NSOperationQueue()
-        
-        queue.ticked = { outcome in
-            switch outcome {
-            case .UnanalyzedTaskFailure(let error, let task):
-                guard let fixtureTask = task as? fixtureSynchronouslyTask else {
-                    print("unexpected task \(task)")
-                    return
-                }
-                if fixtureTask !== expectedTask {
-                    print("unexpected task \(fixtureTask) is not \(expectedTask)")
-                    return
-                }
-                let fixtureError = error as NSError
-                if fixtureError != expectedTaskError {
-                    print("unexpected error \(fixtureError) is not \(expectedTaskError)")
-                    return
-                }
-                consumer.clear()
-                expectation.fulfill()
-            default:
-                print("unexpected test outcome \(outcome)")
-            }
-        }
-        
-        queue.activate(consumer, dispatcher: backgroundQueue)
-        
-        waitForExpectationsWithTimeout(10) { err in
-            
-        }
-    }
+
     
     func testSignals() {
         let firstJobExpectation = expectationWithDescription("first job completed")
@@ -401,7 +652,8 @@ class DefaultQueueTests: XCTestCase {
         let firstJob = fixtureJob(task: fixtureSynchronouslyTask(execution: Execution.Synchronous(.Completed)))
         
         let consumer = fixturePredefinedConsumer(job: firstJob)
-                queue.ticked = { outcome in
+        queue.ticked = { outcome in
+            queue.ticked = nil
             switch outcome {
             case .Completed(let job):
                 guard let fixtureJob = job as? fixtureJob else {
@@ -412,6 +664,7 @@ class DefaultQueueTests: XCTestCase {
                     print("unexpected job instance \(job)")
                     return
                 }
+                consumer.clear()
                 firstJobExpectation.fulfill()
             default:
                 print("unexpected test outcome \(outcome)")
@@ -435,6 +688,7 @@ class DefaultQueueTests: XCTestCase {
         consumer.addJob(secondJob)
         
         queue.ticked = { outcome in
+            queue.ticked = nil
             switch outcome {
             case .Completed(let job):
                 guard let fixtureJob = job as? fixtureJob else {
