@@ -8,10 +8,10 @@
 
 import Foundation
 
-struct GCDDispatcher : Dispatcher {
+public struct GCDDispatcher : Dispatcher {
     let queue: dispatch_queue_t
     
-    func addOperationWithBlock(tick: Tick) {
+    public func addOperationWithBlock(tick: Tick) {
         dispatch_async(queue, tick)
     }
 }
