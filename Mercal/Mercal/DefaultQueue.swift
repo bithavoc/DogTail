@@ -245,8 +245,14 @@ public class DefaultQueue : Queue {
     }
     
     public func install(plugin: Plugin) {
-        if let sourceProvider = plugin as? ConditionsProvider {
-            self.conditions.appendContentsOf(sourceProvider.conditions)
+        if let provider = plugin as? ConditionsProvider {
+            self.conditions.appendContentsOf(provider.conditions)
+        }
+        if let provider = plugin as? SignalsProvider {
+            self.signals.appendContentsOf(provider.signals)
+        }
+        if let provider = plugin as? AnalyzersProvider {
+            self.analyzers.appendContentsOf(provider.analyzers)
         }
     }
 }

@@ -12,11 +12,13 @@ import Mercal
 
 class fixturePredefinedAnalyzer : Analyzer {
     let result: AnalysisResult
-    
-    init(result: AnalysisResult) {
-        self.result = result
-    }
+    let name: String
     var analyzeCount = 0
+    
+    init(name: String, result: AnalysisResult) {
+        self.result = result
+        self.name = name
+    }
     
     func analyze(error: ErrorType, task: Task) -> AnalysisResult {
         analyzeCount += 1

@@ -168,7 +168,7 @@ class DefaultQueueTests: XCTestCase {
         defer {
             queue.shutdown()
         }
-        let expectedAnalyzer = fixturePredefinedAnalyzer(result: .Completed)
+        let expectedAnalyzer = fixturePredefinedAnalyzer(name: "alwaysComplete", result: .Completed)
         queue.analyzers.append(expectedAnalyzer)
         let expectedTaskError = NSError(domain: "testSynchronouslyAnalyzedTaskCompletion.error", code: 42, userInfo: nil)
         let expectedTask = fixtureFailingSynchronouslyTask(error: expectedTaskError)
@@ -218,10 +218,10 @@ class DefaultQueueTests: XCTestCase {
         defer {
             queue.shutdown()
         }
-        queue.analyzers.append(fixturePredefinedAnalyzer(result: .Unknown))
+        queue.analyzers.append(fixturePredefinedAnalyzer(name: "Always Unknown", result: .Unknown))
         
         let expectedRetryDate = NSDate().dateByAddingTimeInterval(100)
-        let expectedAnalyzer = fixturePredefinedAnalyzer(result: .Retry(after:expectedRetryDate))
+        let expectedAnalyzer = fixturePredefinedAnalyzer(name: "retryOnExpectedDate",result: .Retry(after:expectedRetryDate))
         queue.analyzers.append(expectedAnalyzer)
         let expectedTaskError = NSError(domain: "testSynchronouslyAnalyzedTaskRetry.error", code: 42, userInfo: nil)
         let expectedTask = fixtureFailingSynchronouslyTask(error: expectedTaskError)
@@ -399,7 +399,7 @@ class DefaultQueueTests: XCTestCase {
         defer {
             queue.shutdown()
         }
-        let expectedAnalyzer = fixturePredefinedAnalyzer(result: .Completed)
+        let expectedAnalyzer = fixturePredefinedAnalyzer(name: "always completed", result: .Completed)
         queue.analyzers.append(expectedAnalyzer)
         let expectedTaskError = NSError(domain: "testAsynchronouslyAnalyzedTaskCompletion.error", code: 42, userInfo: nil)
         let expectedTask = fixtureSynchronouslyTask(execution: .Asynchronous({ done in
@@ -452,10 +452,10 @@ class DefaultQueueTests: XCTestCase {
         defer {
             queue.shutdown()
         }
-        queue.analyzers.append(fixturePredefinedAnalyzer(result: .Unknown))
+        queue.analyzers.append(fixturePredefinedAnalyzer(name: "always unknown", result: .Unknown))
         
         let expectedRetryDate = NSDate().dateByAddingTimeInterval(100)
-        let expectedAnalyzer = fixturePredefinedAnalyzer(result: .Retry(after:expectedRetryDate))
+        let expectedAnalyzer = fixturePredefinedAnalyzer(name: "always retry on expected date", result: .Retry(after:expectedRetryDate))
         queue.analyzers.append(expectedAnalyzer)
         let expectedTaskError = NSError(domain: "testAsynchronouslyAnalyzedTaskRetry.error", code: 42, userInfo: nil)
         let expectedTask = fixtureSynchronouslyTask(execution: .Asynchronous({ done in
@@ -646,7 +646,7 @@ class DefaultQueueTests: XCTestCase {
         defer {
             queue.shutdown()
         }
-        let signal = SimpleSignal()
+        let signal = SimpleSignal(name: "boom")
         queue.signals.append(signal)
         
         let firstJob = fixtureJob(task: fixtureSynchronouslyTask(execution: Execution.Synchronous(.Completed)))
@@ -721,5 +721,27 @@ class DefaultQueueTests: XCTestCase {
         let conditionsPlugin = fixtureConditionsPlugin(name: "testConditions", conditions: [condition])
         queue.install(conditionsPlugin)
         XCTAssertTrue(queue.conditions.filter{$0.name == condition.name}.count == 1)
+    }
+    
+    func testSignalsProviderPlugin() {
+        let queue = DefaultQueue()
+        defer {
+            queue.shutdown()
+        }
+        let signal = SimpleSignal(name: "bang!")
+        let conditionsPlugin = fixtureSignalsPlugin(name: "testSignals", signals: [signal])
+        queue.install(conditionsPlugin)
+        XCTAssertTrue(queue.signals.filter{$0.name == signal.name}.count == 1)
+    }
+    
+    func testAnalyzersProviderPlugin() {
+        let queue = DefaultQueue()
+        defer {
+            queue.shutdown()
+        }
+        let analyzer = fixturePredefinedAnalyzer(name: "analyzer", result: .Completed)
+        let conditionsPlugin = fixtureAnalyzersPlugin(name: "testAnalyzers", analyzers: [analyzer])
+        queue.install(conditionsPlugin)
+        XCTAssertTrue(queue.analyzers.filter{$0.name == analyzer.name}.count == 1)
     }
 }

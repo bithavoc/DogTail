@@ -9,5 +9,6 @@
 import Foundation
 
 public protocol Analyzer {
+    var name: String { get }
     func analyze(error:ErrorType, task: Task) -> AnalysisResult
 }

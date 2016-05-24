@@ -9,10 +9,11 @@
 import Foundation
 
 public class SimpleSignal : Signal {
-    public var emitted:SignalEmitBlock?
+    public var name: String
+    public var emitted: SignalEmitBlock?
     
-    public init() {
-        
+    public init(name: String) {
+        self.name = name
     }
     
     public func emit() {

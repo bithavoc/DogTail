@@ -11,5 +11,6 @@ import Foundation
 public typealias SignalEmitBlock = () -> Void
 
 public protocol Signal {
+    var name: String { get }
     var emitted:SignalEmitBlock? { get set }
 }
