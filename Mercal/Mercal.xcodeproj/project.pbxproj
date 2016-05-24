@@ -44,6 +44,8 @@
 		76F05EC41CF3DF6D00E91C19 /* fixtureSignalsPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F05EC31CF3DF6D00E91C19 /* fixtureSignalsPlugin.swift */; };
 		76F05EC61CF3E05300E91C19 /* AnalyzersProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F05EC51CF3E05300E91C19 /* AnalyzersProvider.swift */; };
 		76F05EC81CF3E14100E91C19 /* fixtureAnalyzersPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F05EC71CF3E14100E91C19 /* fixtureAnalyzersPlugin.swift */; };
+		76F05ECA1CF3E47300E91C19 /* ConsumerProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F05EC91CF3E47300E91C19 /* ConsumerProvider.swift */; };
+		76F05ECC1CF3E4EA00E91C19 /* fixtureConsumerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F05ECB1CF3E4EA00E91C19 /* fixtureConsumerPlugin.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,6 +99,8 @@
 		76F05EC31CF3DF6D00E91C19 /* fixtureSignalsPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = fixtureSignalsPlugin.swift; sourceTree = "<group>"; };
 		76F05EC51CF3E05300E91C19 /* AnalyzersProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyzersProvider.swift; sourceTree = "<group>"; };
 		76F05EC71CF3E14100E91C19 /* fixtureAnalyzersPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = fixtureAnalyzersPlugin.swift; sourceTree = "<group>"; };
+		76F05EC91CF3E47300E91C19 /* ConsumerProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsumerProvider.swift; sourceTree = "<group>"; };
+		76F05ECB1CF3E4EA00E91C19 /* fixtureConsumerPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = fixtureConsumerPlugin.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,6 +168,7 @@
 				76F05EBD1CF3C9C000E91C19 /* ConditionsProvider.swift */,
 				76F05EC11CF3DF0700E91C19 /* SignalsProvider.swift */,
 				76F05EC51CF3E05300E91C19 /* AnalyzersProvider.swift */,
+				76F05EC91CF3E47300E91C19 /* ConsumerProvider.swift */,
 			);
 			path = Mercal;
 			sourceTree = "<group>";
@@ -192,6 +197,7 @@
 				76F05EBF1CF3CB4C00E91C19 /* fixtureConditionsPlugin.swift */,
 				76F05EC31CF3DF6D00E91C19 /* fixtureSignalsPlugin.swift */,
 				76F05EC71CF3E14100E91C19 /* fixtureAnalyzersPlugin.swift */,
+				76F05ECB1CF3E4EA00E91C19 /* fixtureConsumerPlugin.swift */,
 			);
 			path = fixtures;
 			sourceTree = "<group>";
@@ -304,6 +310,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				76F05ECA1CF3E47300E91C19 /* ConsumerProvider.swift in Sources */,
 				76F05EC21CF3DF0700E91C19 /* SignalsProvider.swift in Sources */,
 				7696C80F1CF039EA00B52A61 /* Queue.swift in Sources */,
 				7696C82B1CF0533B00B52A61 /* Dispatcher.swift in Sources */,
@@ -344,6 +351,7 @@
 				76F05EAF1CF1456100E91C19 /* fixtureJob.swift in Sources */,
 				76F05EA31CF0BD0600E91C19 /* fixturePredefinedCondition.swift in Sources */,
 				76F05EAD1CF1443400E91C19 /* fixturePredefinedAnalyzer.swift in Sources */,
+				76F05ECC1CF3E4EA00E91C19 /* fixtureConsumerPlugin.swift in Sources */,
 				76F05EC01CF3CB4C00E91C19 /* fixtureConditionsPlugin.swift in Sources */,
 				76F05EB31CF2021200E91C19 /* fixtureSynchronouslyTask.swift in Sources */,
 			);

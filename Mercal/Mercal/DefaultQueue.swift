@@ -18,7 +18,7 @@ public class DefaultQueue : Queue {
     
     public var ticked: TickCallback?
     
-    private var consumer: Consumer!
+    public private(set) var consumer: Consumer!
     private var dispatcher: Dispatcher!
     private let lockQueue = dispatch_queue_create("Mercal.SyncQueue", nil)
     
@@ -28,6 +28,9 @@ public class DefaultQueue : Queue {
     
     public func activate(consumer: Consumer, dispatcher: Dispatcher) {
         self.consumer = consumer
+        guard let _ = self.consumer else {
+            fatalError("consumer not established")
+        }
         self.dispatcher = dispatcher
         self.changeSignalsSubscription(subscribe: true)
         self.activated = true
@@ -253,6 +256,9 @@ public class DefaultQueue : Queue {
         }
         if let provider = plugin as? AnalyzersProvider {
             self.analyzers.appendContentsOf(provider.analyzers)
+        }
+        if let provider = plugin as? ConsumerProvider {
+            self.consumer = provider.createConsumer()
         }
     }
 }

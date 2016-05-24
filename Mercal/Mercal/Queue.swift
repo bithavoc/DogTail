@@ -18,7 +18,11 @@ public protocol Queue {
     // analyzers to check conditions on errors
     var analyzers: [Analyzer] { get set }
     
+    // executed when a tick occurs
     var ticked: TickCallback? { get set }
+    
+    // consumer of jobs
+    var consumer: Consumer! {  get }
     
     // activates the queue using the given jobs consumer
     mutating func activate(consumer: Consumer, dispatcher: Dispatcher)

@@ -744,4 +744,16 @@ class DefaultQueueTests: XCTestCase {
         queue.install(conditionsPlugin)
         XCTAssertTrue(queue.analyzers.filter{$0.name == analyzer.name}.count == 1)
     }
+    
+    func testConsumerProviderPlugin() {
+        let queue = DefaultQueue()
+        defer {
+            queue.shutdown()
+        }
+        
+        let consumer = fixturePredefinedConsumer()
+        let conditionsPlugin = fixtureConsumerPlugin(name: "testConsumer", consumer: consumer)
+        queue.install(conditionsPlugin)
+        XCTAssertTrue(queue.consumer is fixturePredefinedConsumer)
+    }
 }
