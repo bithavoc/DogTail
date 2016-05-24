@@ -12,9 +12,9 @@ import Foundation
  Default implementation of Queue
  */
 public class DefaultQueue : Queue {
-    public var signals = [Signal]()
-    public var conditions = [Condition]()
-    public var analyzers = [Analyzer]()
+    public private(set) var signals = [Signal]()
+    public private(set) var conditions = [Condition]()
+    public private(set) var analyzers = [Analyzer]()
     
     public var ticked: TickCallback?
     
@@ -26,10 +26,12 @@ public class DefaultQueue : Queue {
         
     }
     
-    public func activate(consumer: Consumer, dispatcher: Dispatcher) {
-        self.consumer = consumer
+    public func activate(dispatcher: Dispatcher) {
+        if activated {
+            fatalError("Unable to activate, queue has been activated already")
+        }
         guard let _ = self.consumer else {
-            fatalError("consumer not established")
+            fatalError("Unable to activate, consumer missing")
         }
         self.dispatcher = dispatcher
         self.changeSignalsSubscription(subscribe: true)
@@ -38,7 +40,7 @@ public class DefaultQueue : Queue {
     }
     
     private var _activated = false
-    private var activated:Bool {
+    public private(set) var activated:Bool {
         get {
             var value = false
             dispatch_sync(lockQueue) {
@@ -248,6 +250,9 @@ public class DefaultQueue : Queue {
     }
     
     public func install(plugin: Plugin) {
+        if activated {
+            fatalError("Unable to install plugins once the queue has been activated")
+        }
         if let provider = plugin as? ConditionsProvider {
             self.conditions.appendContentsOf(provider.conditions)
         }

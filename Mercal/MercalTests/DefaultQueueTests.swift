@@ -17,14 +17,16 @@ class DefaultQueueTests: XCTestCase {
             queue.shutdown()
         }
         let consumer = fixturePredefinedConsumer()
+        queue.install(fixtureConsumerPlugin(name: "consumer", consumer: consumer))
         
         let backgroundQueue = NSOperationQueue()
         
-        queue.conditions.append(fixturePredefinedCondition(checkResult: Check.Continue))
-        queue.conditions.append(fixturePredefinedCondition(checkResult: Check.Continue))
-        
         let expectedCondition = fixturePredefinedCondition(checkResult: Check.Await)
-        queue.conditions.append(expectedCondition)
+        
+        queue.install(fixtureConditionsPlugin(name: "test conditions plugin", conditions: [
+            fixturePredefinedCondition(checkResult: Check.Continue),
+            fixturePredefinedCondition(checkResult: Check.Continue),
+            expectedCondition]))
         
         queue.ticked = { outcome in
             queue.ticked = nil
@@ -42,7 +44,7 @@ class DefaultQueueTests: XCTestCase {
             }
         }
         
-        queue.activate(consumer, dispatcher: backgroundQueue)
+        queue.activate(backgroundQueue)
         
         waitForExpectationsWithTimeout(5) { err in
             
@@ -56,15 +58,17 @@ class DefaultQueueTests: XCTestCase {
             queue.shutdown()
         }
         let consumer = fixturePredefinedConsumer()
+        queue.install(fixtureConsumerPlugin(name: "consumer", consumer: consumer))
         
         let backgroundQueue = NSOperationQueue()
         
-        queue.conditions.append(fixturePredefinedCondition(checkResult: Check.Continue))
-        queue.conditions.append(fixturePredefinedCondition(checkResult: Check.Continue))
-        
         let expectedError = NSError(domain: "testConditionErrorTest.error", code: 42, userInfo: nil)
         let expectedCondition = fixtureFailingCondition(error: expectedError)
-        queue.conditions.append(expectedCondition)
+        
+        queue.install(fixtureConditionsPlugin(name: "test conditions plugin", conditions: [
+            fixturePredefinedCondition(checkResult: Check.Continue),
+            fixturePredefinedCondition(checkResult: Check.Continue),
+            expectedCondition]))
         
         queue.ticked = { outcome in
             queue.ticked = nil
@@ -87,7 +91,7 @@ class DefaultQueueTests: XCTestCase {
             }
         }
         
-        queue.activate(consumer, dispatcher: backgroundQueue)
+        queue.activate(backgroundQueue)
         
         waitForExpectationsWithTimeout(10) { err in
             
@@ -101,6 +105,7 @@ class DefaultQueueTests: XCTestCase {
             queue.shutdown()
         }
         let consumer = fixturePredefinedConsumer()
+        queue.install(fixtureConsumerPlugin(name: "consumer", consumer: consumer))
         
         let backgroundQueue = NSOperationQueue()
         
@@ -113,7 +118,7 @@ class DefaultQueueTests: XCTestCase {
             }
         }
         
-        queue.activate(consumer, dispatcher: backgroundQueue)
+        queue.activate(backgroundQueue)
         
         waitForExpectationsWithTimeout(10) { err in
             
@@ -129,6 +134,7 @@ class DefaultQueueTests: XCTestCase {
         let expectedTaskError = NSError(domain: "testSynchronousUnanalyzedTaskFailure.error", code: 42, userInfo: nil)
         let expectedTask = fixtureFailingSynchronouslyTask(error: expectedTaskError)
         let consumer = fixturePredefinedConsumer(job: fixtureJob(task: expectedTask))
+        queue.install(fixtureConsumerPlugin(name: "consumer", consumer: consumer))
         
         let backgroundQueue = NSOperationQueue()
         
@@ -155,7 +161,7 @@ class DefaultQueueTests: XCTestCase {
             }
         }
         
-        queue.activate(consumer, dispatcher: backgroundQueue)
+        queue.activate(backgroundQueue)
         
         waitForExpectationsWithTimeout(10) { err in
             
@@ -169,11 +175,12 @@ class DefaultQueueTests: XCTestCase {
             queue.shutdown()
         }
         let expectedAnalyzer = fixturePredefinedAnalyzer(name: "alwaysComplete", result: .Completed)
-        queue.analyzers.append(expectedAnalyzer)
+        queue.install(fixtureAnalyzersPlugin(name: "analyzer", analyzers: [expectedAnalyzer]))
         let expectedTaskError = NSError(domain: "testSynchronouslyAnalyzedTaskCompletion.error", code: 42, userInfo: nil)
         let expectedTask = fixtureFailingSynchronouslyTask(error: expectedTaskError)
         let expectedJob = fixtureJob(task: expectedTask)
         let consumer = fixturePredefinedConsumer(job: expectedJob)
+        queue.install(fixtureConsumerPlugin(name: "consumer", consumer: consumer))
         
         let backgroundQueue = NSOperationQueue()
         
@@ -204,7 +211,7 @@ class DefaultQueueTests: XCTestCase {
             }
         }
         
-        queue.activate(consumer, dispatcher: backgroundQueue)
+        queue.activate(backgroundQueue)
         
         waitForExpectationsWithTimeout(10) { err in
             
@@ -218,15 +225,15 @@ class DefaultQueueTests: XCTestCase {
         defer {
             queue.shutdown()
         }
-        queue.analyzers.append(fixturePredefinedAnalyzer(name: "Always Unknown", result: .Unknown))
-        
+        queue.install(fixtureAnalyzersPlugin(name: "analyzer always known", analyzers: [fixturePredefinedAnalyzer(name: "Always Unknown", result: .Unknown)]))
         let expectedRetryDate = NSDate().dateByAddingTimeInterval(100)
         let expectedAnalyzer = fixturePredefinedAnalyzer(name: "retryOnExpectedDate",result: .Retry(after:expectedRetryDate))
-        queue.analyzers.append(expectedAnalyzer)
+        queue.install(fixtureAnalyzersPlugin(name: "analyzer always known", analyzers: [expectedAnalyzer]))
         let expectedTaskError = NSError(domain: "testSynchronouslyAnalyzedTaskRetry.error", code: 42, userInfo: nil)
         let expectedTask = fixtureFailingSynchronouslyTask(error: expectedTaskError)
         let expectedJob = fixtureJob(task: expectedTask)
         let consumer = fixturePredefinedConsumer(job: expectedJob)
+        queue.install(fixtureConsumerPlugin(name: "consumer", consumer: consumer))
         
         let backgroundQueue = NSOperationQueue()
         
@@ -258,7 +265,7 @@ class DefaultQueueTests: XCTestCase {
             }
         }
         
-        queue.activate(consumer, dispatcher: backgroundQueue)
+        queue.activate(backgroundQueue)
         
         waitForExpectationsWithTimeout(10) { err in
             
@@ -277,6 +284,7 @@ class DefaultQueueTests: XCTestCase {
         let expectedTask = fixtureSynchronouslyTask(execution: .Synchronous(.Completed))
         let expectedJob = fixtureJob(task: expectedTask)
         let consumer = fixturePredefinedConsumer(job: expectedJob)
+        queue.install(fixtureConsumerPlugin(name: "consumer", consumer: consumer))
         
         let backgroundQueue = NSOperationQueue()
         
@@ -299,7 +307,7 @@ class DefaultQueueTests: XCTestCase {
             }
         }
         
-        queue.activate(consumer, dispatcher: backgroundQueue)
+        queue.activate(backgroundQueue)
         
         waitForExpectationsWithTimeout(10) { err in
             
@@ -317,6 +325,7 @@ class DefaultQueueTests: XCTestCase {
         let expectedTask = fixtureSynchronouslyTask(execution: .Synchronous(.Retry(after: expectedRetryDate)))
         let expectedJob = fixtureJob(task: expectedTask)
         let consumer = fixturePredefinedConsumer(job: expectedJob)
+        queue.install(fixtureConsumerPlugin(name: "consumer", consumer: consumer))
         
         let backgroundQueue = NSOperationQueue()
         
@@ -341,7 +350,7 @@ class DefaultQueueTests: XCTestCase {
             }
         }
         
-        queue.activate(consumer, dispatcher: backgroundQueue)
+        queue.activate(backgroundQueue)
         waitForExpectationsWithTimeout(10) { err in
             
         }
@@ -359,6 +368,7 @@ class DefaultQueueTests: XCTestCase {
         let expectedTaskError = NSError(domain: "testSynchronousTaskFailure.error", code: 42, userInfo: nil)
         let expectedTask = fixtureSynchronouslyTask(execution: .Synchronous(.Failed(error: expectedTaskError)))
         let consumer = fixturePredefinedConsumer(job: fixtureJob(task: expectedTask))
+        queue.install(fixtureConsumerPlugin(name: "consumer", consumer: consumer))
         
         let backgroundQueue = NSOperationQueue()
         
@@ -386,7 +396,7 @@ class DefaultQueueTests: XCTestCase {
             }
         }
         
-        queue.activate(consumer, dispatcher: backgroundQueue)
+        queue.activate(backgroundQueue)
         
         waitForExpectationsWithTimeout(10) { err in
             
@@ -400,13 +410,14 @@ class DefaultQueueTests: XCTestCase {
             queue.shutdown()
         }
         let expectedAnalyzer = fixturePredefinedAnalyzer(name: "always completed", result: .Completed)
-        queue.analyzers.append(expectedAnalyzer)
+        queue.install(fixtureAnalyzersPlugin(name: "analyzer", analyzers: [expectedAnalyzer]))
         let expectedTaskError = NSError(domain: "testAsynchronouslyAnalyzedTaskCompletion.error", code: 42, userInfo: nil)
         let expectedTask = fixtureSynchronouslyTask(execution: .Asynchronous({ done in
             done(.Failed(error: expectedTaskError))
         }))
         let expectedJob = fixtureJob(task: expectedTask)
         let consumer = fixturePredefinedConsumer(job: expectedJob)
+        queue.install(fixtureConsumerPlugin(name: "consumer", consumer: consumer))
         
         let backgroundQueue = NSOperationQueue()
         
@@ -437,7 +448,7 @@ class DefaultQueueTests: XCTestCase {
             }
         }
         
-        queue.activate(consumer, dispatcher: backgroundQueue)
+        queue.activate(backgroundQueue)
         
         waitForExpectationsWithTimeout(10) { err in
             
@@ -445,24 +456,23 @@ class DefaultQueueTests: XCTestCase {
         XCTAssertEqual(expectedJob.consumeCount, 1)
     }
 
-    
     func testAsynchronouslyAnalyzedTaskUnkownAndRetry() {
         let expectation = expectationWithDescription("asynchronous analyzed task unknown and retry")
         let queue = DefaultQueue()
         defer {
             queue.shutdown()
         }
-        queue.analyzers.append(fixturePredefinedAnalyzer(name: "always unknown", result: .Unknown))
-        
+        queue.install(fixtureAnalyzersPlugin(name: "analyzer always unknown", analyzers: [fixturePredefinedAnalyzer(name: "always unknown", result: .Unknown)]))
         let expectedRetryDate = NSDate().dateByAddingTimeInterval(100)
         let expectedAnalyzer = fixturePredefinedAnalyzer(name: "always retry on expected date", result: .Retry(after:expectedRetryDate))
-        queue.analyzers.append(expectedAnalyzer)
+        queue.install(fixtureAnalyzersPlugin(name: "analyzer always unknown", analyzers: [expectedAnalyzer]))
         let expectedTaskError = NSError(domain: "testAsynchronouslyAnalyzedTaskRetry.error", code: 42, userInfo: nil)
         let expectedTask = fixtureSynchronouslyTask(execution: .Asynchronous({ done in
             done(.Failed(error: expectedTaskError))
         }))
         let expectedJob = fixtureJob(task: expectedTask)
         let consumer = fixturePredefinedConsumer(job: expectedJob)
+        queue.install(fixtureConsumerPlugin(name: "consumer", consumer: consumer))
         
         let backgroundQueue = NSOperationQueue()
         
@@ -495,7 +505,7 @@ class DefaultQueueTests: XCTestCase {
             }
         }
         
-        queue.activate(consumer, dispatcher: backgroundQueue)
+        queue.activate(backgroundQueue)
         
         waitForExpectationsWithTimeout(10) { err in
             
@@ -516,6 +526,7 @@ class DefaultQueueTests: XCTestCase {
         }))
         let expectedJob = fixtureJob(task: expectedTask)
         let consumer = fixturePredefinedConsumer(job: expectedJob)
+        queue.install(fixtureConsumerPlugin(name: "consumer", consumer: consumer))
         
         let backgroundQueue = NSOperationQueue()
         
@@ -540,7 +551,7 @@ class DefaultQueueTests: XCTestCase {
             }
         }
         
-        queue.activate(consumer, dispatcher: backgroundQueue)
+        queue.activate(backgroundQueue)
         
         waitForExpectationsWithTimeout(10) { err in
             
@@ -559,6 +570,7 @@ class DefaultQueueTests: XCTestCase {
             done(.Failed(error: expectedTaskError))
         }))
         let consumer = fixturePredefinedConsumer(job: fixtureJob(task: expectedTask))
+        queue.install(fixtureConsumerPlugin(name: "consumer", consumer: consumer))
         
         let backgroundQueue = NSOperationQueue()
         
@@ -586,7 +598,7 @@ class DefaultQueueTests: XCTestCase {
             }
         }
         
-        queue.activate(consumer, dispatcher: backgroundQueue)
+        queue.activate(backgroundQueue)
         
         waitForExpectationsWithTimeout(10) { err in
             
@@ -605,6 +617,7 @@ class DefaultQueueTests: XCTestCase {
         }))
         let expectedJob = fixtureJob(task: expectedTask)
         let consumer = fixturePredefinedConsumer(job: expectedJob)
+        queue.install(fixtureConsumerPlugin(name: "consumer", consumer: consumer))
         
         let backgroundQueue = NSOperationQueue()
         
@@ -629,7 +642,7 @@ class DefaultQueueTests: XCTestCase {
             }
         }
         
-        queue.activate(consumer, dispatcher: backgroundQueue)
+        queue.activate(backgroundQueue)
         
         waitForExpectationsWithTimeout(10) { err in
             
@@ -639,7 +652,6 @@ class DefaultQueueTests: XCTestCase {
         XCTAssertEqual(expectedJob.after, expectedRetryDate)
     }
 
-    
     func testSignals() {
         let firstJobExpectation = expectationWithDescription("first job completed")
         let queue = DefaultQueue()
@@ -647,11 +659,12 @@ class DefaultQueueTests: XCTestCase {
             queue.shutdown()
         }
         let signal = SimpleSignal(name: "boom")
-        queue.signals.append(signal)
+        queue.install(fixtureSignalsPlugin(name: "boom", signals: [signal]))
         
         let firstJob = fixtureJob(task: fixtureSynchronouslyTask(execution: Execution.Synchronous(.Completed)))
         
         let consumer = fixturePredefinedConsumer(job: firstJob)
+        queue.install(fixtureConsumerPlugin(name: "consumer", consumer: consumer))
         queue.ticked = { outcome in
             queue.ticked = nil
             switch outcome {
@@ -673,7 +686,7 @@ class DefaultQueueTests: XCTestCase {
         
         let backgroundQueue = NSOperationQueue()
         
-        queue.activate(consumer, dispatcher: backgroundQueue)
+        queue.activate(backgroundQueue)
         
         waitForExpectationsWithTimeout(10) { err in
             
