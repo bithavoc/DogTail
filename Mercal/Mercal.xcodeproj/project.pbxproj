@@ -37,6 +37,9 @@
 		76F05EB11CF145D800E91C19 /* fixtureConsumer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F05EB01CF145D800E91C19 /* fixtureConsumer.swift */; };
 		76F05EB31CF2021200E91C19 /* fixtureSynchronouslyTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F05EB21CF2021200E91C19 /* fixtureSynchronouslyTask.swift */; };
 		76F05EB51CF25B5F00E91C19 /* SimpleSignal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F05EB41CF25B5F00E91C19 /* SimpleSignal.swift */; };
+		76F05EBC1CF3C95400E91C19 /* Plugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F05EBB1CF3C95400E91C19 /* Plugin.swift */; };
+		76F05EBE1CF3C9C000E91C19 /* ConditionsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F05EBD1CF3C9C000E91C19 /* ConditionsProvider.swift */; };
+		76F05EC01CF3CB4C00E91C19 /* fixtureConditionsPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F05EBF1CF3CB4C00E91C19 /* fixtureConditionsPlugin.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +86,9 @@
 		76F05EB01CF145D800E91C19 /* fixtureConsumer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = fixtureConsumer.swift; sourceTree = "<group>"; };
 		76F05EB21CF2021200E91C19 /* fixtureSynchronouslyTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = fixtureSynchronouslyTask.swift; sourceTree = "<group>"; };
 		76F05EB41CF25B5F00E91C19 /* SimpleSignal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleSignal.swift; sourceTree = "<group>"; };
+		76F05EBB1CF3C95400E91C19 /* Plugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Plugin.swift; sourceTree = "<group>"; };
+		76F05EBD1CF3C9C000E91C19 /* ConditionsProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConditionsProvider.swift; sourceTree = "<group>"; };
+		76F05EBF1CF3CB4C00E91C19 /* fixtureConditionsPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = fixtureConditionsPlugin.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +152,8 @@
 				76F05E9B1CF0B5EC00E91C19 /* Outcome.swift */,
 				76F05EAA1CF12D6100E91C19 /* AnalysisResult.swift */,
 				76F05EB41CF25B5F00E91C19 /* SimpleSignal.swift */,
+				76F05EBB1CF3C95400E91C19 /* Plugin.swift */,
+				76F05EBD1CF3C9C000E91C19 /* ConditionsProvider.swift */,
 			);
 			path = Mercal;
 			sourceTree = "<group>";
@@ -171,6 +179,7 @@
 				76F05EAE1CF1456100E91C19 /* fixtureJob.swift */,
 				76F05EB01CF145D800E91C19 /* fixtureConsumer.swift */,
 				76F05EB21CF2021200E91C19 /* fixtureSynchronouslyTask.swift */,
+				76F05EBF1CF3CB4C00E91C19 /* fixtureConditionsPlugin.swift */,
 			);
 			path = fixtures;
 			sourceTree = "<group>";
@@ -289,6 +298,7 @@
 				7696C8131CF03A4800B52A61 /* Job.swift in Sources */,
 				7696C8191CF0413A00B52A61 /* Jobs.swift in Sources */,
 				76F05E9A1CF0B58100E91C19 /* TickCallback.swift in Sources */,
+				76F05EBE1CF3C9C000E91C19 /* ConditionsProvider.swift in Sources */,
 				7696C81D1CF0430500B52A61 /* Execution.swift in Sources */,
 				7696C8251CF04FF400B52A61 /* Condition.swift in Sources */,
 				7696C8211CF04F0100B52A61 /* Signal.swift in Sources */,
@@ -301,6 +311,7 @@
 				7696C8271CF050AF00B52A61 /* Analyzer.swift in Sources */,
 				7696C8171CF03D8300B52A61 /* ConsumerListener.swift in Sources */,
 				76F05EAB1CF12D6100E91C19 /* AnalysisResult.swift in Sources */,
+				76F05EBC1CF3C95400E91C19 /* Plugin.swift in Sources */,
 				76F05E981CF0B00300E91C19 /* DefaultQueue.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -317,6 +328,7 @@
 				76F05EAF1CF1456100E91C19 /* fixtureJob.swift in Sources */,
 				76F05EA31CF0BD0600E91C19 /* fixturePredefinedCondition.swift in Sources */,
 				76F05EAD1CF1443400E91C19 /* fixturePredefinedAnalyzer.swift in Sources */,
+				76F05EC01CF3CB4C00E91C19 /* fixtureConditionsPlugin.swift in Sources */,
 				76F05EB31CF2021200E91C19 /* fixtureSynchronouslyTask.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

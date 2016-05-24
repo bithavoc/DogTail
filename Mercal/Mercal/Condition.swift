@@ -9,5 +9,6 @@
 import Foundation
 
 public protocol Condition {
+    var name:String { get }
     func check(queue: Queue) throws -> Check
 }

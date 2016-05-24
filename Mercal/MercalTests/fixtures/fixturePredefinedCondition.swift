@@ -11,10 +11,12 @@ import Foundation
 import Mercal
 
 class fixturePredefinedCondition: Condition {
+    var name: String
     let checkResult: Check
     
-    init(checkResult: Check) {
+    init(checkResult: Check, name: String = "fixturePredefinedCondition") {
         self.checkResult = checkResult
+        self.name = name
     }
     
     func check(queue: Queue) -> Check {

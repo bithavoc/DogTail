@@ -711,4 +711,15 @@ class DefaultQueueTests: XCTestCase {
             
         }
     }
+    
+    func testConditionProviderPlugin() {
+        let queue = DefaultQueue()
+        defer {
+            queue.shutdown()
+        }
+        let condition = fixturePredefinedCondition(checkResult: Check.Await)
+        let conditionsPlugin = fixtureConditionsPlugin(name: "testConditions", conditions: [condition])
+        queue.install(conditionsPlugin)
+        XCTAssertTrue(queue.conditions.filter{$0.name == condition.name}.count == 1)
+    }
 }

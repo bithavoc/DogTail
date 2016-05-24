@@ -23,6 +23,9 @@ public protocol Queue {
     // activates the queue using the given jobs consumer
     mutating func activate(consumer: Consumer, dispatcher: Dispatcher)
     
+    // install a pluging that configures the pipeline
+    mutating func install(plugin: Plugin)
+    
     // shutsdown the processing of jobs
     mutating func shutdown()
 }

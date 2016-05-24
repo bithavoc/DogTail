@@ -243,4 +243,10 @@ public class DefaultQueue : Queue {
         case Error(condition: Condition, error: ErrorType)
         case Ready
     }
+    
+    public func install(plugin: Plugin) {
+        if let sourceProvider = plugin as? ConditionsProvider {
+            self.conditions.appendContentsOf(sourceProvider.conditions)
+        }
+    }
 }

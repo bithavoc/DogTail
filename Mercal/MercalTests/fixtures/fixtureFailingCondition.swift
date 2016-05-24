@@ -11,9 +11,11 @@ import Mercal
 
 class fixtureFailingCondition: Condition {
     let error: ErrorType
+    let name:String
     
-    init(error: ErrorType) {
+    init(error: ErrorType, name:String = "fixtureFailingCondition") {
         self.error = error
+        self.name = name
     }
     
     func check(queue: Queue) throws -> Check {
