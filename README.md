@@ -58,3 +58,7 @@ github "bithavoc/DogTail" ~> 0.0
 ```
 
 Run `carthage update` to build the framework and drag the built `DogTail.framework` into your Xcode project.
+
+## License
+
+DogTail is released under the MIT license. See [LICENSE](LICENSE) for details.
