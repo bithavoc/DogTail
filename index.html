@@ -1,0 +1,131 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Dogtail by bithavoc</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <meta name="viewport" content="width=device-width">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Dogtail</h1>
+        <p>Elegant job processing in Swift</p>
+
+        <p class="view"><a href="https://github.com/bithavoc/DogTail">View the Project on GitHub <small>bithavoc/DogTail</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/bithavoc/DogTail/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/bithavoc/DogTail/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/bithavoc/DogTail">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <p><img src="https://raw.githubusercontent.com/bithavoc/DogTail/assets/doggy.png" alt="DogTail: Elegant Job Processing in Swift"></p>
+
+<p><a href="https://travis-ci.org/bithavoc/DogTail"><img src="https://travis-ci.org/bithavoc/DogTail.svg?branch=master" alt="Build Status"></a></p>
+
+<blockquote>
+<p>Easy and flexible job processing for OSX and iOS in Swift</p>
+</blockquote>
+
+<p><strong>Status:</strong> This library is a <strong>work in progress</strong>.</p>
+
+<h2>
+<a id="how-it-works" class="anchor" href="#how-it-works" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>How it Works</h2>
+
+<p>DogTail is a job processing framework that works as an extendable pipeline of steps allowing exceptional control over the queue.</p>
+
+<p>A queue tick usually executes the pipeline in the following order:</p>
+
+<table>
+<thead>
+<tr>
+<th>Step</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Signals</td>
+</tr>
+<tr>
+<td>Conditions</td>
+</tr>
+<tr>
+<td>Consumer</td>
+</tr>
+<tr>
+<td>Job &lt;-&gt; Task Execution</td>
+</tr>
+<tr>
+<td>Analyzer</td>
+</tr>
+</tbody>
+</table>
+
+<h3>
+<a id="signals" class="anchor" href="#signals" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Signals</h3>
+
+<p>When emitted, signals wake up the queue and causes a tick to happen.</p>
+
+<h3>
+<a id="conditions" class="anchor" href="#conditions" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Conditions</h3>
+
+<p>On every tick, all the conditions check to see if the pipeline can proceed to process jobs.</p>
+
+<h3>
+<a id="consumers" class="anchor" href="#consumers" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Consumers</h3>
+
+<p>A consumer's only job is to provide the next task to be executed.</p>
+
+<h3>
+<a id="jobs" class="anchor" href="#jobs" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Jobs</h3>
+
+<p>Every consumer uses it's own way to provide and persist jobs, inside a job there's always a <code>Task</code> to be executed. Tasks can be <code>synchronous</code>, <code>asynchronous</code> or both at the same time.</p>
+
+<h3>
+<a id="analyzers" class="anchor" href="#analyzers" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Analyzers</h3>
+
+<p>If a job fails, analyzers will analyze the error(hah!) and determine what do to with it.</p>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation</h2>
+
+<h3>
+<a id="carthage" class="anchor" href="#carthage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Carthage</h3>
+
+<p><a href="https://github.com/Carthage/Carthage">Carthage</a> is a decentralized dependency manager that builds your dependencies and provides you with binary frameworks.</p>
+
+<p>You can install Carthage with <a href="http://brew.sh/">Homebrew</a> using the following command:</p>
+
+<div class="highlight highlight-source-shell"><pre>$ brew update
+$ brew install carthage</pre></div>
+
+<p>To integrate DogTail into your Xcode project using Carthage, specify it in your <code>Cartfile</code>:</p>
+
+<pre lang="ogdl"><code>github "bithavoc/DogTail" ~&gt; 0.0
+</code></pre>
+
+<p>Run <code>carthage update</code> to build the framework and drag the built <code>DogTail.framework</code> into your Xcode project.</p>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>License</h2>
+
+<p>DogTail is released under the MIT license. See <a href="LICENSE">LICENSE</a> for details.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/bithavoc">bithavoc</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
